@@ -23,12 +23,10 @@ const Staff = ({ data }: Props) => {
               data.staff.map((staff) => (
                 <li key={staff.name}>
                   <div className="space-y-4">
-                    <div className="relative aspect-w-3 aspect-h-2 object-cover shadow-lg rounded-lg">
+                    <div className="relative object-cover shadow-lg rounded-lg">
                       {staff.picture && (
                         <NextImage
                           className="h-full w-full rounded-lg"
-                          layout="fill"
-                          objectFit="cover"
                           media={staff.picture}
                         />
                       )}
