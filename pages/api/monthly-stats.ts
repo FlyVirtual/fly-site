@@ -5,11 +5,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 const prisma = new PrismaClient()
 
 const Stats = async (_: NextApiRequest, res: NextApiResponse) => {
-  const [
-    totalFlights,
-    totalHours,
-    totalMiles,
-  ] = await prisma.$transaction([
+  const [totalFlights, totalHours, totalMiles] = await prisma.$transaction([
     prisma.pirep.count({
       where: {
         accepted: {
@@ -17,8 +13,8 @@ const Stats = async (_: NextApiRequest, res: NextApiResponse) => {
         },
         submitdate: {
           gte: DateTime.now().startOf("month").toJSDate(),
-          lte: DateTime.now().endOf("month").toJSDate()
-        }
+          lte: DateTime.now().endOf("month").toJSDate(),
+        },
       },
     }),
     prisma.$queryRaw`SELECT SUM(TIME_TO_SEC(flighttime_stamp)) AS total FROM pireps WHERE accepted = 1 AND
@@ -33,8 +29,8 @@ const Stats = async (_: NextApiRequest, res: NextApiResponse) => {
         },
         submitdate: {
           gte: DateTime.now().startOf("month").toJSDate(),
-          lte: DateTime.now().endOf("month").toJSDate()
-        }
+          lte: DateTime.now().endOf("month").toJSDate(),
+        },
       },
     }),
   ])
